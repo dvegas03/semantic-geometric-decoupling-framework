@@ -1,0 +1,23 @@
+# Vista GH200 profile (schema-complete; values finalized in Phase 1/2).
+# Paths resolve against $SCRATCH / $WORK when those env vars are set.
+name: vista
+device: cuda
+dataloader_workers: 16
+checkpoint_interval_s: 900     # 15 min on Vista
+vlm_model: Qwen/Qwen2-VL-7B-Instruct
+paths:
+  data_root: ${SCRATCH:-./data/vista}/corpus
+  ckpt_root: ${SCRATCH:-./data/vista}/ckpts
+  mirror_root: ${WORK:-./data/vista}/mirror
+corpus:
+  frames: 400000
+  categories: 20
+  holdout_category_fraction: 0.2
+  shard_size: 256
+  image_hw: [480, 640]
+lora:
+  rank: 8
+  batch_size: 1
+  grad_accum: 8
+  max_steps: 10000
+  learning_rate: 1.0e-4

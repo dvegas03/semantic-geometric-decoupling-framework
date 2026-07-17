@@ -1,0 +1,31 @@
+# Local 4070 pilot profile.
+# PILOT_ROOT must live on the WSL2 ext4 rootfs (not /mnt/c DrvFs) — fcntl locks
+# and atomic renames are unreliable on DrvFs.
+name: local
+device: cuda
+dataloader_workers: 2          # 32 GB RAM budget
+checkpoint_interval_s: 300     # 5 min locally (15 min on Vista) — more drill opportunities
+vlm_model: Qwen/Qwen2-VL-2B-Instruct
+paths:
+  data_root: ${PILOT_ROOT:-./data/pilot}/corpus
+  ckpt_root: ${PILOT_ROOT:-./data/pilot}/ckpts
+  mirror_root: ${PILOT_ROOT:-./data/pilot}/mirror    # stands in for $WORK
+corpus:
+  frames: 3000
+  categories: 20
+  holdout_category_fraction: 0.2
+  shard_size: 256
+  image_hw: [480, 640]
+lora:
+  rank: 8
+  batch_size: 1
+  grad_accum: 8
+  max_steps: 500
+  learning_rate: 1.0e-4
+  # Rollback to best/ + halve LR if EMA loss stays >2% above best for 25 steps.
+  loss_ema: 0.9
+  loss_patience: 25
+  loss_rel_tol: 0.02
+  loss_warmup_steps: 40
+  loss_lr_decay: 0.5
+  loss_max_rollbacks: 3

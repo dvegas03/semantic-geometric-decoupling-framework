@@ -1,0 +1,70 @@
+experiments:
+- name: datagen-mini
+  kind: datagen
+  config: {}
+  status: done
+  retries: 0
+  max_retries: 2
+- name: pointnet-modelnet40
+  kind: pointnet
+  config:
+    epochs: 120
+  status: done
+  retries: 0
+  max_retries: 2
+- name: lora-2b-smoke
+  kind: lora
+  config:
+    max_steps: 1200
+  status: done
+  retries: 0
+  max_retries: 2
+  requires:
+  - datagen-mini
+- name: eval-h2-lifting
+  kind: eval
+  config:
+    detector: gt
+    lifting: both
+    split: heldout
+  status: done
+  retries: 0
+  max_retries: 2
+  requires:
+  - datagen-mini
+- name: eval-vlm-zeroshot
+  kind: eval
+  config:
+    detector: vlm
+    lifting: full
+    split: heldout
+    max_samples: 200
+  status: done
+  retries: 0
+  max_retries: 2
+  requires:
+  - datagen-mini
+- name: eval-vlm-lora
+  kind: eval
+  config:
+    detector: vlm+adapter
+    adapter_from: lora-2b-smoke
+    lifting: full
+    split: heldout
+    max_samples: 200
+  status: done
+  retries: 0
+  max_retries: 2
+  requires:
+  - datagen-mini
+  - lora-2b-smoke
+- name: eval-sunrgbd-mini
+  kind: eval
+  config:
+    detector: gt
+    lifting: both
+    source: sunrgbd
+    max_samples: 50
+  status: done
+  retries: 0
+  max_retries: 2
