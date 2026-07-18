@@ -10,14 +10,14 @@ import time
 from collections.abc import Callable, Iterator, Sequence
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from enum import StrEnum
+from enum import Enum
 from pathlib import Path
 from typing import Any, cast
 
 import yaml
 
 
-class ExperimentStatus(StrEnum):
+class ExperimentStatus(str, Enum):
     PENDING = "pending"
     RUNNING = "running"
     DONE = "done"
