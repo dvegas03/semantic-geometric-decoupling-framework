@@ -13,13 +13,14 @@ if [ -z "${PYTHON}" ]; then
 fi
 mkdir -p "${ROOT}/image" "${ROOT}/depth" "${ROOT}/meta"
 
-"${PYTHON}" - <<'PY'
+ROOT="${ROOT}" "${PYTHON}" - <<'PY'
 from pathlib import Path
 import json
+import os
 import numpy as np
 from PIL import Image
 
-root = Path("data/pilot/sunrgbd")
+root = Path(os.environ["ROOT"])
 n = 8
 rng = np.random.default_rng(0)
 for i in range(n):
