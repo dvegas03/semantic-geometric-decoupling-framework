@@ -33,6 +33,9 @@ dmypy.json
 *.swp
 *.swo
 
+# ── Jupyter ────────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+
 # ── Generated artefacts (never commit pipeline outputs) ───────────────────────
 *.html
 *.png

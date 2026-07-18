@@ -6,7 +6,7 @@ SCRATCH="${SCRATCH:-${HOME}/scratch}"
 HF_HOME="${SCRATCH}/hf"
 CONTAINER_DIR="${SCRATCH}/containers"
 CONTAINER_SIF="${CONTAINER_DIR}/pytorch-arm64.sif"
-NGC_IMAGE="${NGC_IMAGE:-docker://nvcr.io/nvidia/pytorch:24.10-py3-igpu}"
+NGC_IMAGE="${NGC_IMAGE:-docker://nvcr.io/nvidia/pytorch:24.10-py3}"
 
 MODELS=(
     "Qwen/Qwen2-VL-7B-Instruct"
