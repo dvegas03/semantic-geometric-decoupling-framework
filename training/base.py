@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import threading
 from abc import ABC, abstractmethod
+from collections.abc import Callable
 from enum import Enum
-from typing import Callable
 
 from training.checkpoint import CheckpointManager
 from training.profile import Profile

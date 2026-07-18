@@ -55,7 +55,7 @@ def _hline(widths):
 
 def _row(cells, widths):
     parts = []
-    for c, w in zip(cells, widths):
+    for c, w in zip(cells, widths, strict=True):
         parts.append(f" {str(c):<{w}} ")
     return "|" + "|".join(parts) + "|"
 

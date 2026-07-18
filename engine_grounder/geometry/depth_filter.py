@@ -1,6 +1,5 @@
 # Industry-grade depth map filtering pipeline.
 
-from typing import Optional
 
 import cv2
 import numpy as np
@@ -60,7 +59,7 @@ class RobustDepthEstimator:
         self,
         depth: np.ndarray,
         residuals: np.ndarray,
-        density: Optional[np.ndarray] = None,
+        density: np.ndarray | None = None,
     ) -> tuple[np.ndarray, np.ndarray]:
         valid = self.void_mask(depth)
         if density is None:
@@ -177,7 +176,7 @@ class RobustDepthEstimator:
             constant_values=0,
         )
         k = self.morph_kernel
-        for y, x in zip(*np.nonzero(newly_valid)):
+        for y, x in zip(*np.nonzero(newly_valid), strict=True):
             patch = pad_d[y : y + 2 * k + 1, x : x + 2 * k + 1]
             vmask = pad_v[y : y + 2 * k + 1, x : x + 2 * k + 1]
             n = vmask.sum()
@@ -222,9 +221,9 @@ class RobustDepthEstimator:
     def get_stable_z(
         self,
         depth_crop: np.ndarray,
-        full_depth_map: Optional[np.ndarray] = None,
-        bbox: Optional[tuple] = None,
-    ) -> Optional[float]:
+        full_depth_map: np.ndarray | None = None,
+        bbox: tuple | None = None,
+    ) -> float | None:
         if depth_crop.size == 0:
             return None
 

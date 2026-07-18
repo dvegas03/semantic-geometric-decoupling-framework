@@ -6,8 +6,8 @@ import os
 import shutil
 import subprocess
 import threading
+from collections.abc import Callable
 from pathlib import Path
-from typing import Callable
 
 _POINTER = "LATEST"
 

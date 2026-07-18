@@ -65,14 +65,15 @@ class SweepGrid:
 
     def _name(self, point: Sequence[object]) -> str:
         coords = "-".join(
-            _format_coordinate(axis.key, value) for axis, value in zip(self.axes, point)
+            _format_coordinate(axis.key, value)
+            for axis, value in zip(self.axes, point, strict=True)
         )
         return f"{self.base_name}-{coords}"
 
     def specs(self) -> list[ExperimentSpec]:
         out: list[ExperimentSpec] = []
         for point in itertools.product(*(axis.values for axis in self.axes)):
-            config = {axis.key: value for axis, value in zip(self.axes, point)}
+            config = {axis.key: value for axis, value in zip(self.axes, point, strict=True)}
             out.append(
                 ExperimentSpec(
                     name=self._name(point),

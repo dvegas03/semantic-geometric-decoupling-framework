@@ -386,5 +386,5 @@ class TestStatisticalAccuracy:
                 if z is not None:
                     errs.append(abs(z - true_z))
             results.append(np.median(errs) if errs else np.inf)
-        for sigma, err in zip([0.005, 0.015, 0.03], results):
+        for sigma, err in zip([0.005, 0.015, 0.03], results, strict=True):
             assert err < 0.05, f"sigma={sigma}: median error {err:.4f} >= 0.05"

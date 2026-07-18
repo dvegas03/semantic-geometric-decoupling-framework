@@ -7,17 +7,17 @@ import fcntl
 import os
 import socket
 import time
-from collections.abc import Iterator, Sequence
+from collections.abc import Callable, Iterator, Sequence
 from contextlib import contextmanager
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
-from typing import Any, Callable, cast
+from typing import Any, cast
 
 import yaml
 
 
-class ExperimentStatus(str, Enum):
+class ExperimentStatus(StrEnum):
     PENDING = "pending"
     RUNNING = "running"
     DONE = "done"
