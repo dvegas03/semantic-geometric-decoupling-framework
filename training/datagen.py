@@ -626,6 +626,9 @@ class DatagenJob(Trainer):
 
         out_dir = self.profile.paths.data_root
         out_dir.mkdir(parents=True, exist_ok=True)
+        for _stale in out_dir.glob("shard-*.tar.*.tmp"):
+            if (out_dir / (_stale.name.split(".tar.")[0] + ".tar")).exists():
+                _stale.unlink(missing_ok=True)
         for shard_idx in range(start_shard, total_shards):
             if self.stop_event.is_set():
                 return TrainerOutcome.PREEMPTED
@@ -672,7 +675,11 @@ class DatagenJob(Trainer):
         end = min(start + shard_size, frames)
 
         final = out_dir / f"shard-{shard_idx:05d}.tar"
-        tmp = out_dir / f"shard-{shard_idx:05d}.tar.tmp"
+        # Unique per process: a job reclaimed after the queue TTL can overlap a
+        # still-dying predecessor writing the same shard. Both os.replace onto the
+        # same final atomically, and shard bytes are deterministic per shard_idx,
+        # so the last writer wins with identical content — no tmp stomping, no crash.
+        tmp = out_dir / f"shard-{shard_idx:05d}.tar.{os.getpid()}.tmp"
         if tmp.exists():
             tmp.unlink()
 
