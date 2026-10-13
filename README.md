@@ -1,5 +1,7 @@
 # Semantic-Geometric Decoupling Framework
 
+**Poster and published abstract:** D. Kharitonenkov, H. Miao, V. Chheang. "Semantic-Geometric Decoupling for Universal Spatial Anchoring in Extended Reality." Proceedings I3D Companion 2026, ACM. https://doi.org/10.1145/3807895.3807934
+
 [![CI](https://github.com/dvegas03/semantic-geometric-decoupling-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/dvegas03/semantic-geometric-decoupling-framework/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
